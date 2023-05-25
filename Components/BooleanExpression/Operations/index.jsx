@@ -4,8 +4,8 @@ const Operations = ({ op, setOp, args, updateParent }) => {
   // left/right used for child elements
   // op, setOp used for current element
 
-  const [leftOp, setLeftOp] = useState({ type: "constant", value: "false" });
-  const [rightOp, setRightOp] = useState({ type: "constant", value: "false" });
+  const [leftOp, setLeftOp] = useState({ type: "argument", value: "false" });
+  const [rightOp, setRightOp] = useState({ type: "argument", value: "false" });
 
   useEffect(()=>{
     if(updateParent)
@@ -36,7 +36,7 @@ const Operations = ({ op, setOp, args, updateParent }) => {
   };
 
   const valueChange = (e) => {
-    if (op.type === "constant" || op.type === "argument") {
+    if (op.type === "argument" || op.type === "constant") {
       let newOp = { ...op };
       newOp.value = e.target.value;
 
@@ -47,18 +47,12 @@ const Operations = ({ op, setOp, args, updateParent }) => {
   return (
     <div>
       <select value={op.type} onChange={typeChange}>
+      <option value="select">select</option>
         <option value="argument">Argument</option>
         <option value="constant">Constant</option>
         <option value="and">AND</option>
         <option value="or">OR</option>
       </select>
-
-      {op.type === "constant" && (
-        <select defaultValue={op.value} onChange={(e) => valueChange(e)}>
-          <option value="false">False</option>
-          <option value="true">True</option>
-        </select>
-      )}
 
       {op.type === "argument" && (
         <select
@@ -73,6 +67,14 @@ const Operations = ({ op, setOp, args, updateParent }) => {
         </select>
       )}
 
+      {op.type === "constant" && (
+        <select defaultValue={op.value} onChange={(e) => valueChange(e)}>
+          <option value="false">False</option>
+          <option value="true">True</option>
+        </select>
+      )}
+
+    
       {(op.type === "and" || op.type === "or") && (
         <div style={{marginLeft:"10px"}}>
           <Operations op={leftOp} setOp={setLeftOp} updateParent = {(newOp)=>setOp({...op, left:newOp})} args={args} />

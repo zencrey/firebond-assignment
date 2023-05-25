@@ -24,8 +24,8 @@ const Arguments = ({ args, setArgs }) => {
   
     return (
       <div>
-        <h2>Arguments</h2>
-        <button onClick={addArgument}>Add Argument</button>
+        
+       
         {args.map((arg, index) => {
           return (
             <div key={`${index}`}>
@@ -46,6 +46,7 @@ const Arguments = ({ args, setArgs }) => {
             </div>
           );
         })}
+        <button onClick={addArgument}>Add Argument</button>
       </div>
     );
   };
